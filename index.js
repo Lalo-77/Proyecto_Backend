@@ -3,18 +3,13 @@ class ProductManager {
         this.products = [];
         this.codeId = 0;
     }
-
     addProduct(title, description, price, thumbnail, code, stock) {
         if (!title || !description || !price || !thumbnail || !code || !stock) {
             console.log("Todos los campos son obligatorios");
-            return;
         }
-
         if (this.products.some(product => product.code === code)) {
             console.log("Ya existe un producto con el mismo código");
-            return;
         }
-
         const newProduct = {
             id: this.codeId++,
             title,
@@ -37,8 +32,26 @@ class ProductManager {
         if (product) {
             return product;
         } else {
-            console.log("Product Not Found");
+            console.log("Producto no encontrado");
         }
+    }
+    updateProduct(id, updatedFields) {
+        const products = this.getProducts();
+        const index = products.findIndex(p => p.id === id);
+        if (index === -1) {
+        throw new Error('Producto no encontrado');
+        }
+        products[index] = { ...products[index], ...updatedFields };
+        (this.path, JSON.stringify(products, null, 2));
+    }
+    
+    deleteProduct(id) {
+        const products = this.getProducts();
+        const filteredProducts = products.filter(p => p.id !== id);
+        if (filteredProducts.length === products.length) {
+        throw new Error('Producto no encontrado');
+        }
+        (this.path, JSON.stringify(filteredProducts, null, 2));
     }
 }
 
@@ -52,3 +65,11 @@ console.log(productManager.getProducts());
 
 console.log(productManager.getProductById(1));
 console.log(productManager.getProductById(3));
+productManager.updateProduct(1, { price: 0 });
+const updatedProduct = productManager.getProductById(1);
+console.log(updatedProduct);
+
+productManager.deleteProduct(1);
+const deleteProducts = productManager.getProducts();
+console.log(deleteProducts);
+
