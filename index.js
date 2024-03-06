@@ -49,7 +49,7 @@ class ProductManager {
     }
     //Elimina un producto
     deleteProduct(id) {
-        const arrayIndex = this.products.findIndex(product => product.id === parseInt(id))
+        const arrayIndex = this.products.findIndex(product => product.id !== id)
         if (arrayIndex === -1) throw new Error(`El producto con ID ${id} no existe`)
         this.products.splice(arrayIndex, 1)
 }
