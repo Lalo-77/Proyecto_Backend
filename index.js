@@ -1,7 +1,6 @@
 class ProductManager {
     constructor() {
-
-        const fs = require ("fs");
+       // const fs = require("fs");
         this.products = [];
         this.codeId = 0;
     }
@@ -25,11 +24,11 @@ class ProductManager {
         this.products.push(newProduct);
     }
 
-    getProducts() {
+    GetProducts() {
         return this.products;
     }
 
-    getProductById(id) {
+    GetProductById(id) {
         const product = this.products.find(product => product.id === id);
 
         if (product) {
@@ -39,23 +38,23 @@ class ProductManager {
         }
     }
 
-    updateProduct(id, updatedProduct) {
-        const products = this.getProducts();
-        const index = products.findIndex(product => product.id === id);
-        if (index !== -1) {
+    updateProduct(id, product) {
+        const products = this.GetProducts
+        let productUpdated = {};
+        if (index === -1) {
             products[index] = { ...updatedProduct, id };
             fs.writeFileSync(this.path, JSON.stringify(products, null, 2));
         }
+        return this.products[index]
     }
-
+    //Elimina un producto
     deleteProduct(id) {
-        const products = this.getProducts();
-        const filteredProducts = products.filter(product => product.id !== id);
-        fs.writeFileSync(this.path, JSON.stringify(filteredProducts, null, 2));
-    }
-
+        const arrayIndex = this.products.findIndex(product => product.id === parseInt(id))
+        if (arrayIndex === -1) throw new Error(`El producto con ID ${id} no existe`)
+        this.products.splice(arrayIndex, 1)
 }
-
+    }
+    
 // Ejemplo de uso
 const productManager = new ProductManager();
 
